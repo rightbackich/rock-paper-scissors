@@ -4,55 +4,71 @@ function getComputerChoice() {
   return computerChoice;
 }
 
-function getHumanChoice() {
-  let humanChoice = prompt("Rock, paper or scissors?");
-  return humanChoice.toLowerCase();
-}
-
 let humanScore = 0;
 let computerScore = 0;
 
-
-function playGame() {
   function playRound(humanChoice, computerChoice) {
-    if (humanChoice == "rock" && computerChoice == "paper") {
-      console.log("You Lose! Paper beats rock");
-      computerScore++
-      console.log("computer Score:" + computerScore);
-    } else if (humanChoice == "paper" && computerChoice=="scissors") {
-      console.log("You lose! Scissors beats paper");
-      computerScore++
-      console.log("computer Score:" + computerScore);
-    } else if (humanChoice == "scissors" && computerChoice=="rock") {
-      console.log("You lose! Rock beats scissors");
-      computerScore++
-      console.log("computer Score:" + computerScore);
+    let resultMessage = "";
+    
+      if (humanChoice == "rock" && computerChoice == "paper") {
+        resultMessage = "You Lose! Paper beats rock";
+        computerScore++;
+    } else if (humanChoice == "paper" && computerChoice == "scissors") {
+        resultMessage = "You lose! Scissors beats paper";
+        computerScore++;
+    } else if (humanChoice == "scissors" && computerChoice == "rock") {
+        resultMessage = "You lose! Rock beats scissors";
+        computerScore++;
     } else if (humanChoice == "paper" && computerChoice == "rock") {
-      console.log("You Win! Paper beats rock");
-      humanScore++
-      console.log("human Score:" + humanScore);
-    } else if (humanChoice == "scissors" && computerChoice =="paper") {
-      console.log("You Win! Scissors beats Paper");
-      humanScore++
-      console.log("human Score:" + humanScore);
-    } else if (humanChoice == "rock" && computerChoice =="scissors") {
-      console.log("You Win! Rock beats scissors");
-      humanScore++
-      console.log("human Score:" + humanScore);
+        resultMessage = "You Win! Paper beats rock";
+        humanScore++;
+    } else if (humanChoice == "scissors" && computerChoice == "paper") {
+        resultMessage = "You Win! Scissors beats Paper";
+        humanScore++;
+    } else if (humanChoice == "rock" && computerChoice == "scissors") {
+        resultMessage = "You Win! Rock beats scissors";
+        humanScore++;
     } else {
-      console.log("Tie! Try again");
+        resultMessage = "Tie! Try again";
     }
-  }
-  const humanSelection = getHumanChoice();
-  const computerSelection = getComputerChoice();
-  playRound(humanSelection, computerSelection),console.log( humanScore, computerScore);
-}
+    
+    let resultBoard = document.createElement("div");
+    let finishMessage = document.createElement("div");
 
-while (true) {
-  playGame()
-  if(Math.max(humanScore, computerScore) === 5) break
-}
-console.log(`${humanScore - computerScore > 0 ? 'HUMAN' : 'MACHINE'} WINS!`)
+    resultBoard.textContent = `
+          ${resultMessage}
+          Human Score: ${humanScore}
+          Computer Score: ${computerScore}
+        `;
+    if (humanScore && computerScore === 5) {
+        finishMessage.textContent = `${humanScore - computerScore >0 ? 'HUMAN' : 'MACHINE'} WINS!`
+    }
+
+    document.body.appendChild(resultBoard);
+    document.body.appendChild(finishMessage);
+  }
+
+  // создал кнопки для выбора игрока
+  let rockBTN = document.createElement("button");
+  let paperBTN = document.createElement("button");
+  let scissorsBTN = document.createElement("button");
+  
+  rockBTN.textContent = "Rock"
+  rockBTN.addEventListener("click", () => playRound('rock', getComputerChoice()));
+  
+  paperBTN.textContent = "Paper"
+  paperBTN.addEventListener("click", () => playRound('paper', getComputerChoice()));
+  
+  scissorsBTN.textContent = "Scissors"
+  scissorsBTN.addEventListener("click", () => playRound('scissors', getComputerChoice()));
+  
+  document.body.appendChild(rockBTN);
+  document.body.appendChild(paperBTN);
+  document.body.appendChild(scissorsBTN);
+  
+// console.log()
+const computerSelection = getComputerChoice();
+
 
 
 // гениальная грязь
@@ -72,4 +88,3 @@ console.log(`${humanScore - computerScore > 0 ? 'HUMAN' : 'MACHINE'} WINS!`)
   //     'Tie! Try again'
   //   return void updateScore?.() ?? formattedResult 
   // }
-  
